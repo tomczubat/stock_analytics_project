@@ -2,9 +2,11 @@
 pyspark==4.0.0
 pandas==2.3.2
 numpy==2.3.2
+pyarrow
 
 # API ingestion
 requests==2.32.4
+yfinance
 
 # Azure
 azure-identity==1.24.0
@@ -14,7 +16,7 @@ azure-keyvault-secrets==4.10.0
 python-dotenv==1.1.1
 
 # Data quality
-great-expectations==1.6.3
+# TODO: Add Great Expectations once we have a data quality framework in place
 
 # Delta Lake
 delta-spark==4.0.0
