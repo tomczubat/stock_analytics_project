@@ -1,32 +1,25 @@
 import yfinance as yf
+import pandas as pd
 
-TICKERS = [
-    "QQQM",
-    "MSFT",
-    "GOOGL",
-    "AMZN",
-    "SPCX"
-]
 
-for ticker in TICKERS:
+def get_stock_data(ticker):
 
-    print(f"Downloading {ticker}...")
+    df = yf.download(
+        ticker,
+        period="1y",
+        auto_adjust=True,
+        progress=False
+    )
 
-    try:
-        df = yf.download(
-            ticker,
-            period="1d",
-            auto_adjust=True,
-            progress=False
-        )
+    if df.empty:
+        raise ValueError(f"No data returned for {ticker}")
 
-        if df.empty:
-            print(f"WARNING: No data returned for {ticker}")
-        else:
-            print(f"SUCCESS: {ticker}")
-            print(f"Rows: {len(df)}")
-            print(df.head())
+    # Flatten columns
+    if isinstance(df.columns, pd.MultiIndex):
+        df.columns = df.columns.get_level_values(0)
 
-    except Exception as e:
-        print(f"ERROR downloading {ticker}")
-        print(e)
+    df["ticker"] = ticker
+
+    print(df.columns)
+
+    return df.reset_index()
