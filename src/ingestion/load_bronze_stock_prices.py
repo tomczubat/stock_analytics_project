@@ -1,5 +1,10 @@
-from stock_api import get_stock_data
+# Load stock prices from the API and save to a CSV file in the raw data folder.
+
+from pathlib import Path
 import pandas as pd
+
+from stock_api import get_stock_data
+
 
 TICKERS = [
     "QQQM",
@@ -9,24 +14,41 @@ TICKERS = [
     "SPCX"
 ]
 
-all_data = []
 
-for ticker in TICKERS:
+def main():
 
-    print(f"Downloading {ticker}...")
+    all_data = []
 
-    try:
-        df = get_stock_data(ticker)
-        all_data.append(df)
+    for ticker in TICKERS:
+        print(f"Downloading {ticker}...")
 
-    except Exception as e:
-        print(e)
+        try:
+            df = get_stock_data(ticker)
 
-bronze_df = pd.concat(all_data)
+            all_data.append(df)
 
-bronze_df.to_parquet(
-    "data/raw/stock_prices.parquet",
-    index=False
-)
+            print(f"Success: {ticker}")
 
-print("Bronze layer loaded successfully")
+        except Exception as e:
+            print(f"Failed: {ticker} - {e}")
+
+    combined_df = pd.concat(all_data, ignore_index=True)
+
+    Path("data/raw").mkdir(
+        parents=True,
+        exist_ok=True
+    )
+
+    output_file = "data/raw/stock_prices.csv"
+
+    combined_df.to_csv(
+        output_file,
+        index=False
+    )
+
+    print(f"\nSaved data to {output_file}")
+    print(f"Rows loaded: {len(combined_df)}")
+
+
+if __name__ == "__main__":
+    main()
