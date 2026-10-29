@@ -7,7 +7,7 @@ import pandas as pd
 def get_stock_data(ticker):
     df = yf.download(
         ticker,
-        period="1y",
+        period="1d",
         auto_adjust=True,
         progress=False
     )
