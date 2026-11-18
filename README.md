@@ -46,6 +46,26 @@ Fabric Warehouse
 Power BI Reports & Dashboards
 ```
 
+``` UPDATE THIS LATER
+Bronze Lakehouse
+    ↓
+Silver Lakehouse
+    ↓
+Gold Lakehouse
+    ↓
+Fabric Warehouse
+    ↓
+vw_stock_reporting
+    ↓
+Semantic Model
+    ↓
+Power BI Desktop (live connection)
+    ↓
+Power BI Service
+
+```
+
+
 ---
 
 ## Technologies

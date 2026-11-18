@@ -1,7 +1,12 @@
-import pandas as pd
+# test_spark.py
 
-df = pd.read_parquet(
-    "data/raw/stock_prices.parquet"
-)
+from pyspark.sql import SparkSession
 
-print(df.dtypes)
+spark = SparkSession.builder \
+    .master("local[*]") \
+    .appName("test") \
+    .getOrCreate()
+
+print("Spark Version:", spark.version)
+
+spark.stop()
