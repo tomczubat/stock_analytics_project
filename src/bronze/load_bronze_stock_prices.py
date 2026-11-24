@@ -12,7 +12,8 @@ TICKERS = [
     "MSFT",
     "GOOGL",
     "AMZN",
-    "SPCX"
+    "SPCX",
+    "ANT"
 ]
 
 
